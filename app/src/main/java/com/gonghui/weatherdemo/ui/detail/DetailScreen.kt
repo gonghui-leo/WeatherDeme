@@ -4,13 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gonghui.weatherdemo.bean.City
-import com.gonghui.weatherdemo.bean.CityData
 import com.gonghui.weatherdemo.bean.WeatherData
 
 @Composable
@@ -18,8 +15,9 @@ fun DetailScreen(
     viewModel: DetailViewModel,
     weatherCode: Int?
 ) {
-    viewModel.getWeather(weatherCode ?: 100000)
-    val weatherData = viewModel.weatherData.observeAsState()
+    val weatherData = viewModel.getWeather(weatherCode ?: 100000).collectAsState(
+        initial = null
+    )
 
     // Because the state is read here,
     // DetailScreen recomposes whenever dataExample changes.
